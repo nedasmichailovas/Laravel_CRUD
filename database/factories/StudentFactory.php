@@ -1,21 +1,25 @@
 <?php
-
+ 
 namespace Database\Factories;
-
-use App\Models\City;
+ 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\City;
+use App\Models\Group;
+ 
 class StudentFactory extends Factory
 {
     public function definition(): array
     {
         return [
-            'name'      => $this->faker->firstName(),
-            'surname'   => $this->faker->lastName(),
-            'birthday'  => $this->faker->date('Y-m-d', '-18 years'),
-            'phone'     => $this->faker->phoneNumber(),
-            'address'   => $this->faker->address(),
-            'city_id'   => City::inRandomOrder()->first()->id ?? 1,
+            'name'     => $this->faker->firstName,
+            'surname'  => $this->faker->lastName,
+            'address'  => $this->faker->address,
+            'phone'    => $this->faker->phoneNumber,
+            'city_id'  => City::inRandomOrder()->first()->id ?? 1,
+            'grupe_id' => Group::inRandomOrder()->first()->id ?? 1,
+            'gim_data' => $this->faker
+                              ->dateTimeBetween('-30 years', '-18 years')
+                              ->format('Y-m-d'),
         ];
     }
 }

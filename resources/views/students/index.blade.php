@@ -1,48 +1,73 @@
 @extends('layouts.layout')
-
+@section('title', 'Studentu sarasas')
 @section('content')
-    <h1 class="mb-4">Studentų sąrašas</h1>
-    <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">+ Pridėti naują studentą</a>
-
-    <table class="table table-striped table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Vardas</th>
-                <th>Pavardė</th>
-                <th>Gimimo data</th>
-                <th>Telefonas</th>
-                <th>Adresas</th>
-                <th>Miestas</th>
-                <th>Veiksmai</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($students as $student)
-            <tr>
-                <td>{{ $student->id }}</td>
-                <td>{{ $student->name }}</td>
-                <td>{{ $student->surname }}</td>
-                <td>{{ $student->birthday }}</td>
-                <td>{{ $student->phone }}</td>
-                <td>{{ $student->address }}</td>
-                <td>{{ $student->city->name ?? '—' }}</td>
-                <td>
-                    <a href="{{ route('students.edit', $student) }}" class="btn btn-warning btn-sm">Redaguoti</a>
-                    
-                    <form action="{{ route('students.destroy', $student) }}" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" 
-                                onclick="return confirm('Tikrai ištrinti šį studentą?')">
-                            Ištrinti
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    {{ $students->links() }}
+ 
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Studentu sarasas</h2>
+    <div class="d-flex gap-2">
+        @auth
+        <a href="{{ route('students.create') }}"
+           class="btn btn-success">
+            Prideti studenta
+        </a>
+        <a href="{{ route('students.trashed') }}"
+           class="btn btn-warning">
+            Rodyti istrinta
+        </a>
+        @endauth
+    </div>
+</div>
+ 
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Vardas</th>
+            <th>Pavarde</th>
+            <th>Adresas</th>
+            <th>Telefonas</th>
+            <th>Miestas</th>
+            <th>Grupe</th>
+            <th>Gim. data</th>
+            @auth
+            <th>Veiksmai</th>
+            @endauth
+        </tr>
+    </thead>
+    <tbody>
+    @foreach ($students as $student)
+        <tr>
+            <td>{{ $student->id }}</td>
+            <td>{{ $student->name }}</td>
+            <td>{{ $student->surname }}</td>
+            <td>{{ $student->address }}</td>
+            <td>{{ $student->phone }}</td>
+            <td>{{ $student->city->name ?? '-' }}</td>
+            <td>{{ $student->group->pavadinimas ?? '-' }}</td>
+            <td>{{ $student->gim_data }}</td>
+            @auth
+            <td>
+                <a href="{{ route('students.edit', $student->id) }}"
+                   class="btn btn-primary btn-sm">
+                    Redaguoti
+                </a>
+                <form action="{{ route('students.destroy', $student->id) }}"
+                      method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Istrinti?')">
+                        Istrinti
+                    </button>
+                </form>
+            </td>
+            @endauth
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+ 
+{{ $students->links() }}
+ 
 @endsection
