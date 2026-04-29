@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
             $table->string('phone');
             $table->text('address');
             $table->timestamps();
