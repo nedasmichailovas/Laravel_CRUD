@@ -1,23 +1,17 @@
 @extends('layouts.layout')
 @section('title', 'Studentu sarasas')
 @section('content')
- 
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Studentu sarasas</h2>
     <div class="d-flex gap-2">
         @auth
-        <a href="{{ route('students.create') }}"
-           class="btn btn-success">
-            Prideti studenta
-        </a>
-        <a href="{{ route('students.trashed') }}"
-           class="btn btn-warning">
-            Rodyti istrinta
-        </a>
+        <a href="{{ route('students.create') }}" class="btn btn-success">Prideti studenta</a>
+        <a href="{{ route('students.trashed') }}" class="btn btn-warning">Rodyti istrinta</a>
         @endauth
     </div>
 </div>
- 
+
 <table class="table table-striped table-bordered">
     <thead class="table-dark">
         <tr>
@@ -29,6 +23,7 @@
             <th>Miestas</th>
             <th>Grupe</th>
             <th>Gim. data</th>
+            <th>Asmens kodas</th>
             @auth
             <th>Veiksmai</th>
             @endauth
@@ -45,21 +40,17 @@
             <td>{{ $student->city->name ?? '-' }}</td>
             <td>{{ $student->group->pavadinimas ?? '-' }}</td>
             <td>{{ $student->gim_data }}</td>
+            <td>{{ $student->asmens_kodas ?? '-' }}</td>
             @auth
             <td>
                 <a href="{{ route('students.edit', $student->id) }}"
-                   class="btn btn-primary btn-sm">
-                    Redaguoti
-                </a>
+                   class="btn btn-primary btn-sm">Redaguoti</a>
                 <form action="{{ route('students.destroy', $student->id) }}"
                       method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit"
-                            class="btn btn-danger btn-sm"
-                            onclick="return confirm('Istrinti?')">
-                        Istrinti
-                    </button>
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Istrinti?')">Istrinti</button>
                 </form>
             </td>
             @endauth
@@ -67,7 +58,7 @@
     @endforeach
     </tbody>
 </table>
- 
+
 {{ $students->links() }}
- 
+
 @endsection
