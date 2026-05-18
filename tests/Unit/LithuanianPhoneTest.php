@@ -25,10 +25,10 @@ class LithuanianPhoneTest extends TestCase
     }
 
     #[Test]
-    public function it_accepts_valid_lt_mobile_8_format(): void
+    public function it_accepts_valid_lt_mobile_06_format(): void
     {
         $this->assertTrue(
-            $this->rule->passes('phone', '861234567')
+            $this->rule->passes('phone', '061234567')
         );
     }
 
@@ -36,7 +36,7 @@ class LithuanianPhoneTest extends TestCase
     public function it_rejects_too_short_number(): void
     {
         $this->assertFalse(
-            $this->rule->passes('phone', '8612345')
+            $this->rule->passes('phone', '+3706123')
         );
     }
 

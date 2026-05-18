@@ -12,11 +12,11 @@ class LithuanianPhone implements Rule
             return false;
         }
         $value = preg_replace('/\s+/', '', (string) $value);
-        return (bool) preg_match('/^(\+3706|86)\d{7}$/', $value);
+        return (bool) preg_match('/^(\+370\d{8}|06\d{7})$/', $value);
     }
 
     public function message()
     {
-        return 'Telefonas turi būti lietuviškas numeris (pvz. +37061234567 arba 861234567).';
+        return 'Telefonas turi būti lietuviškas numeris (pvz. +37061234567 arba 061234567).';
     }
 }
