@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,6 +11,10 @@ Route::get('/', function () {
 // Studentų sąrašas prieinamas visiems
 Route::get('students', [StudentController::class, 'index'])
      ->name('students.index');
+
+// PDF prieinamas visiems
+Route::get('students/pdf', [PDFController::class, 'generatePDF'])
+     ->name('students.pdf');
 
 // Visi kiti maršrutai – tik prisijungusiems
 Route::middleware('auth')->group(function () {

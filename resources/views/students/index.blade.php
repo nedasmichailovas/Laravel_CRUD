@@ -9,6 +9,9 @@
         <a href="{{ route('students.create') }}" class="btn btn-success">Prideti studenta</a>
         <a href="{{ route('students.trashed') }}" class="btn btn-warning">Rodyti istrinta</a>
         @endauth
+        <a href="{{ route('students.pdf') }}" class="btn btn-danger">
+    Eksportuoti PDF
+</a>
     </div>
 </div>
 
